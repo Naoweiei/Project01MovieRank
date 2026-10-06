@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Navbar />
         {children}
         <footer className="wrap muted" style={{ paddingTop: 0, fontSize: ".8rem" }}>
-          ข้อมูลหนังจาก TMDB (ช้ TMDB API แต่ไม่ได้รับการรับรองโดย TMDB)
+          ข้อมูลหนังจาก TMDB (ใช้ TMDB API แต่ไม่ได้รับการรับรองโดย TMDB)
         </footer>
       </body>
     </html>
