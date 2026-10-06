@@ -2,7 +2,7 @@ MovieRank
 
 เว็บไซต์: (https://project01movierank.vercel.app/)
 GitHub: (https://github.com/Naoweiei/Project01MovieRank)
-บัญชีทดสอบ: (อีเมล) / (รหัสผ่าน) หรือสมัครใหม่ได้ที่หน้าเข้าสู่ระบบ
+บัญชีทดสอบ: reelrank.test1@gmail.com / 123456 หรือสมัครใหม่ได้ที่หน้าเข้าสู่ระบบ
 
 สมาชิก
 นาย กรชวัล โสจันทร์ 6804101301
