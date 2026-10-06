@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+MovieRank
 
-## Getting Started
+เว็บไซต์: (ใส่ลิงก์ Vercel)
+GitHub: (ใส่ลิงก์ Repository)
+บัญชีทดสอบ: (อีเมล) / (รหัสผ่าน) หรือสมัครใหม่ได้ที่หน้าเข้าสู่ระบบ
 
-First, run the development server:
+สมาชิก
+นาย กรชวัล โสจันทร์ 6804101301
+นาย กรณิศ นุ่นรอด        6804101302
+นาย ธนากร ทัญญเจริญ     6804101342
+นาย ภาทัช ประสาทสรรค์    6804101404
+นาย เตชพล จันทรวิจิตร     6804101328
+		
+เทคโนโลยี
+Next.js + TypeScript + Tailwind CSS, Supabase (Auth + PostgreSQL), TMDB API, deploy บน Vercel
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+วิธีติดตั้ง
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ต้องมี Node.js 20 ขึ้นไป, บัญชี Supabase และบัญชี TMDB
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+สร้างโปรเจกต์ Next.js npx create-next-app@latest movie-watchlist
+ติดตั้งแพ็กเกจ npm install @supabase/supabase-js
+สร้างโปรเจกต์ Supabase แล้วรัน supabase/schema.sql ใน SQL Editor และปิด "Confirm email" ที่ Authentication > Sign In / Providers > Email
+สร้างไฟล์ .env.local (ดูตัวอย่างที่ .env.example)
+   NEXT_PUBLIC_SUPABASE_URL=...
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+   TMDB_TOKEN=...   (API Read Access Token จาก themoviedb.org)
+npm run dev แล้วเปิด http://localhost:3000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+วิธีใช้งาน
+สมัครสมาชิกและเข้าสู่ระบบ
+ค้นหาหนังที่หน้า "ค้นหา" แล้วกดเพิ่มใน Watchlist หรือกดดาวเพื่อให้คะแนน
+จัดการรายการที่หน้า "Watchlist ของฉัน"
+ดูอันดับรวมของทุกคนที่หน้า "อันดับ" (คำนวณแบบ weighted rating ใน lib/ranking.ts)
+โครงสร้างหลัก
+app/ หน้าเว็บและ API route (app/api/search เรียก TMDB ฝั่ง server เพื่อซ่อน token)
+components/ MovieCard, Stars, Poster, Navbar
+lib/ Supabase client และสูตรคำนวณอันดับ
+supabase/schema.sql ตารางและสิทธิ์การเข้าถึงข้อมูล
+แหล่งที่มา
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+ข้อมูลหนังจาก TMDB (ไม่ได้รับการรับรองโดย TMDB), ฟอนต์ Prompt จาก Google Fonts, ใช้ AI (Claude) ช่วยร่างโค้ด สมาชิกทุกคนตรวจสอบและอธิบายได้
