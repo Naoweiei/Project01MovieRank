@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useUser } from "@/lib/useUser";
 import MovieCard, { Entry, Movie } from "@/components/MovieCard";
@@ -25,15 +25,25 @@ export default function SearchPage() {
     });
   }, [user]);
 
-  async function search(e: React.FormEvent) {
-    e.preventDefault();
-    if (!q.trim()) return;
+  const runSearch = useCallback(async (term: string) => {
+    if (!term.trim()) return;
     setLoading(true); setMsg("");
-    const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
+    const res = await fetch(`/api/search?q=${encodeURIComponent(term)}`);
     const data = await res.json();
     setLoading(false); setSearched(true);
     if (!res.ok) return setMsg("ค้นหาไม่สำเร็จ ตรวจสอบ TMDB_TOKEN ในไฟล์ .env.local");
     setResults(data.results ?? []);
+  }, []);
+
+  // ถ้าเข้ามาจากการ์ดหน้าแรก (/search?q=ชื่อหนัง) ให้ค้นหาให้เลย
+  useEffect(() => {
+    const initial = new URLSearchParams(window.location.search).get("q");
+    if (initial) { setQ(initial); runSearch(initial); }
+  }, [runSearch]);
+
+  function search(e: React.FormEvent) {
+    e.preventDefault();
+    runSearch(q);
   }
 
   // บันทึก: items (ข้อมูลหนัง) -> watchlist (ของผู้ใช้คนนี้)

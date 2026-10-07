@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Noto_Sans_Thai } from "next/font/google";
+import { Prompt } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
-const thai = Noto_Sans_Thai({ subsets: ["thai", "latin"], variable: "--font-thai" });
+const font = Prompt({ subsets: ["thai", "latin"], weight: ["400", "500", "600", "700", "800"], variable: "--font-thai" });
 
 export const metadata: Metadata = {
   title: "MovieRank - อันดับหนังที่อยากดู และที่ทุกคนชอบ",
@@ -12,13 +13,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="th" className={thai.variable}>
+    <html lang="th" className={font.variable}>
       <body>
         <Navbar />
         {children}
-        <footer className="wrap muted" style={{ paddingTop: 0, fontSize: ".8rem" }}>
-          ข้อมูลหนังจาก TMDB (ใช้ TMDB API แต่ไม่ได้รับการรับรองโดย TMDB)
-        </footer>
+        <Footer />
       </body>
     </html>
   );
