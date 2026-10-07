@@ -6,11 +6,10 @@ GitHub: (https://github.com/Naoweiei/Project01MovieRank)
 
 สมาชิก
 นาย กรชวัล โสจันทร์ 6804101301
-นาย กรณิศ นุ่นรอด        6804101302
-นาย ธนากร ทัญญเจริญ     6804101342
-นาย ภาทัช ประสาทสรรค์    6804101404
-นาย เตชพล จันทรวิจิตร     6804101328
-		
+นาย กรณิศ นุ่นรอด 6804101302
+นาย ธนากร ทัญญเจริญ 6804101342
+นาย ภาทัช ประสาทสรรค์ 6804101404
+นาย เตชพล จันทรวิจิตร 6804101328
 เทคโนโลยี
 Next.js + TypeScript + Tailwind CSS, Supabase (Auth + PostgreSQL), TMDB API, deploy บน Vercel
 
@@ -22,11 +21,10 @@ Next.js + TypeScript + Tailwind CSS, Supabase (Auth + PostgreSQL), TMDB API, dep
 ติดตั้งแพ็กเกจ npm install @supabase/supabase-js
 สร้างโปรเจกต์ Supabase แล้วรัน supabase/schema.sql ใน SQL Editor และปิด "Confirm email" ที่ Authentication > Sign In / Providers > Email
 สร้างไฟล์ .env.local (ดูตัวอย่างที่ .env.example)
-   NEXT_PUBLIC_SUPABASE_URL=...
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=...
-   TMDB_TOKEN=...   (API Read Access Token จาก themoviedb.org)
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+TMDB_TOKEN=... (API Read Access Token จาก themoviedb.org)
 npm run dev แล้วเปิด http://localhost:3000
-
 
 วิธีใช้งาน
 สมัครสมาชิกและเข้าสู่ระบบ
