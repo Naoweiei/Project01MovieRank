@@ -19,7 +19,7 @@ export default function LoginPage() {
 
   async function signUp() {
     const { error } = await supabase.auth.signUp({ email, password });
-    setMsg(error ? error.message : "สมัครสำเร็จ ลองกด \"เข้าสู่ระบบ\" ได้เลย (ถ้าเปิดยืนยันอีเมลไว้ ให้เช็กกล่องจดหมายก่อน)");
+    setMsg(error ? error.message : "สมัครสำเร็จ ลองกด \"เข้าสู่ระบบ\" ได้เลย");
   }
 
   return (
