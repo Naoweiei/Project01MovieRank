@@ -6,7 +6,7 @@ import { fetchRanking } from "@/lib/fetchRanking";
 import type { Ranked } from "@/lib/ranking";
 import { TmdbMovie, useMovies } from "@/lib/useMovies";
 import { useUser } from "@/lib/useUser";
-import FeaturedHero from "@/components/FeaturedHero";
+import FeaturedHero from "@/components/Featured";
 import MovieRow, { RowItem } from "@/components/MovieRow";
 import Reveal from "@/components/Reveal";
 
