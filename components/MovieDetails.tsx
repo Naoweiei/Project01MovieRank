@@ -258,7 +258,7 @@ export default function MovieDetails({ id }: { id: string }) {
                         {saving ? "กำลังบันทึก..." : "+ เพิ่มใน Watchlist"}
                       </button>
                       <div className="movie-watchlist-rating">
-                        <span>ให้คะแนนเพื่อบันทึกว่า “ดูแล้ว”</span>
+                        <span>ให้คะแนน</span>
                         <Stars
                           value={null}
                           onChange={(rating) => saveEntry({ rating, status: "watched" })}
@@ -269,7 +269,6 @@ export default function MovieDetails({ id }: { id: string }) {
                 ) : (
                   <div className="movie-watchlist-controls">
                     <Link href="/login" className="btn btn-primary">เข้าสู่ระบบเพื่อเพิ่มเข้า Watchlist</Link>
-                    <p className="muted movie-watchlist-hint">บันทึกหนังที่อยากดู ให้คะแนน และจัดการสถานะได้ที่นี่</p>
                   </div>
                 )}
               </section>
