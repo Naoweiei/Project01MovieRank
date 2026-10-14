@@ -1,33 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getMovieGenreName } from "@/lib/movieGenres";
 
 const PATHS = {
   trending: "trending/movie/week",
   now_playing: "movie/now_playing",
   top_rated: "movie/top_rated",
 } as const;
-
-// รหัสประเภทหนังของ TMDB -> ชื่อภาษาไทย
-const GENRES: Record<number, string> = {
-  28: "แอ็กชัน",
-  12: "ผจญภัย",
-  16: "แอนิเมชัน",
-  35: "ตลก",
-  80: "อาชญากรรม",
-  99: "สารคดี",
-  18: "ดราม่า",
-  10751: "ครอบครัว",
-  14: "แฟนตาซี",
-  36: "ประวัติศาสตร์",
-  27: "สยองขวัญ",
-  10402: "ดนตรี",
-  9648: "ลึกลับ",
-  10749: "โรแมนติก",
-  878: "ไซไฟ",
-  10770: "ภาพยนตร์ทีวี",
-  53: "ระทึกขวัญ",
-  10752: "สงคราม",
-  37: "คาวบอย",
-};
 
 type Raw = {
   id: number;
@@ -85,7 +63,7 @@ export async function GET(req: NextRequest) {
         overview: m.overview || e?.overview || "",
         rating: Math.round((m.vote_average ?? 0) * 10) / 10,
         genres: (m.genre_ids ?? [])
-          .map((g) => GENRES[g])
+          .map((g) => getMovieGenreName(g))
           .filter(Boolean)
           .slice(0, 3),
       };

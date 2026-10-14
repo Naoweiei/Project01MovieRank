@@ -14,6 +14,7 @@ export default function Footer() {
           <Link href="/search">ค้นหา</Link>
           <Link href="/watchlist">Watchlist ของฉัน</Link>
           <Link href="/ranking">อันดับ</Link>
+          <Link href="/contact">ติดต่อ</Link>
         </nav>
         <p className="muted" style={{ margin: 0, fontSize: ".8rem", maxWidth: "20rem" }}>
           ข้อมูลหนังจาก TMDB (ผลิตภัณฑ์นี้ใช้ TMDB API แต่ไม่ได้รับการรับรองโดย TMDB)

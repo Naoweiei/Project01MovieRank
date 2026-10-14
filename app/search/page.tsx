@@ -2,37 +2,51 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
 import { useUser } from "@/lib/useUser";
-import MovieCard, { Entry, Movie } from "@/components/MovieCard";
+import MovieCard, { Movie } from "@/components/MovieCard";
+import { MOVIE_GENRES } from "@/lib/movieGenres";
 
 export default function SearchPage() {
   const { user } = useUser();
   const [q, setQ] = useState("");
+  const [genreId, setGenreId] = useState("");
   const [results, setResults] = useState<Movie[]>([]);
-  const [entries, setEntries] = useState<Record<string, Entry>>({});
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalResults, setTotalResults] = useState(0);
+  const filteredResults = genreId
+    ? results.filter((movie) => movie.genreIds?.includes(Number(genreId)))
+    : results;
 
-  // โหลดรายการของผู้ใช้ เพื่อให้การ์ดแสดงสถานะที่บันทึกไว้แล้ว
-  useEffect(() => {
-    if (!user) { setEntries({}); return; }
-    supabase.from("watchlist").select("item_id, status, rating").eq("user_id", user.id).then(({ data }) => {
-      const map: Record<string, Entry> = {};
-      (data ?? []).forEach((r) => (map[r.item_id] = { status: r.status, rating: r.rating }));
-      setEntries(map);
-    });
-  }, [user]);
-
-  const runSearch = useCallback(async (term: string) => {
-    if (!term.trim()) return;
-    setLoading(true); setMsg("");
-    const res = await fetch(`/api/search?q=${encodeURIComponent(term)}`);
-    const data = await res.json();
-    setLoading(false); setSearched(true);
-    if (!res.ok) return setMsg("ค้นหาไม่สำเร็จ ตรวจสอบ TMDB_TOKEN ในไฟล์ .env.local");
-    setResults(data.results ?? []);
+  const runSearch = useCallback(async (term: string, selectedGenre = "", selectedPage = 1) => {
+    if (!term.trim() && !selectedGenre) return;
+    setLoading(true);
+    setMsg("");
+    const params = new URLSearchParams();
+    if (term.trim()) params.set("q", term.trim());
+    if (selectedGenre) params.set("genre", selectedGenre);
+    params.set("page", String(selectedPage));
+    try {
+      const res = await fetch(`/api/search?${params.toString()}`);
+      const data = await res.json();
+      setSearched(true);
+      if (!res.ok) {
+        setMsg(data.error ?? "ค้นหาไม่สำเร็จ ตรวจสอบ TMDB_TOKEN ในไฟล์ .env.local");
+        return;
+      }
+      setResults(data.results ?? []);
+      setPage(data.page ?? selectedPage);
+      setTotalPages(data.totalPages ?? 0);
+      setTotalResults(data.totalResults ?? 0);
+    } catch {
+      setSearched(true);
+      setMsg("ค้นหาไม่สำเร็จ กรุณาลองใหม่อีกครั้ง");
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   // ถ้าเข้ามาจากการ์ดหน้าแรก (/search?q=ชื่อหนัง) ให้ค้นหาให้เลย
@@ -43,34 +57,63 @@ export default function SearchPage() {
 
   function search(e: React.FormEvent) {
     e.preventDefault();
-    runSearch(q);
-  }
-
-  // บันทึก: items (ข้อมูลหนัง) -> watchlist (ของผู้ใช้คนนี้)
-  async function save(m: Movie, patch: Partial<Entry>) {
-    if (!user) return setMsg("กรุณาเข้าสู่ระบบก่อนบันทึก");
-    const cur = entries[m.id];
-    const next: Entry = { status: patch.status ?? cur?.status ?? "want", rating: patch.rating ?? cur?.rating ?? null };
-    await supabase.from("items").upsert({ id: m.id, title: m.title, year: m.year, poster: m.poster });
-    const { error } = await supabase.from("watchlist").upsert({ user_id: user.id, item_id: m.id, ...next });
-    if (error) return setMsg(error.message);
-    setEntries({ ...entries, [m.id]: next });
-    setMsg(`บันทึก "${m.title}" แล้ว`);
+    setPage(1);
+    runSearch(q, genreId, 1);
   }
 
   return (
     <main className="wrap">
       <h1 style={{ fontSize: "1.8rem", marginBottom: "1rem" }}>ค้นหาหนัง</h1>
-      <form onSubmit={search} style={{ display: "flex", gap: ".6rem" }}>
+      <form onSubmit={search} className="search-form">
         <input className="input" value={q} onChange={(e) => setQ(e.target.value)} placeholder="พิมพ์ชื่อหนัง เช่น Interstellar" aria-label="ชื่อหนัง" />
+        <label className="search-genre-field">
+          <span>หมวดหมู่</span>
+          <select className="input" value={genreId} onChange={(e) => setGenreId(e.target.value)} aria-label="เลือกหมวดหมู่หนัง">
+            <option value="">ทุกหมวดหมู่</option>
+            {MOVIE_GENRES.map((genre) => (
+              <option key={genre.id} value={genre.id}>{genre.name}</option>
+            ))}
+          </select>
+        </label>
         <button className="btn btn-primary" disabled={loading}>{loading ? "กำลังค้นหา..." : "ค้นหา"}</button>
       </form>
       {!user && <p className="notice">ค้นหาได้เลย แต่ต้อง <Link href="/login"><u>เข้าสู่ระบบ</u></Link> ก่อนจึงจะบันทึกลง Watchlist ได้</p>}
       {msg && <p className="notice" role="status">{msg}</p>}
-      {searched && results.length === 0 && !msg && <p className="muted">ไม่พบเรื่องที่ค้นหา ลองใช้ชื่ออื่นหรือชื่อภาษาอังกฤษ</p>}
+      {searched && filteredResults.length === 0 && !msg && (
+        <p className="muted">
+          {results.length === 0
+            ? genreId && !q.trim()
+              ? "ไม่พบหนังในหมวดหมู่ที่เลือก"
+              : "ไม่พบเรื่องที่ค้นหา ลองใช้ชื่ออื่นหรือชื่อภาษาอังกฤษ"
+            : "ไม่พบหนังในหมวดหมู่ที่เลือกจากผลการค้นหานี้"}
+        </p>
+      )}
+      {searched && totalPages > 1 && (
+        <div className="search-pagination" aria-label="เปลี่ยนหน้าผลการค้นหา">
+          <span className="muted">
+            หน้า {page} จาก {totalPages} · {totalResults.toLocaleString("th-TH")} เรื่อง
+          </span>
+          <div className="search-pagination-actions">
+            <button
+              className="btn"
+              onClick={() => runSearch(q, genreId, page - 1)}
+              disabled={loading || page <= 1}
+            >
+              ← ก่อนหน้า
+            </button>
+            <button
+              className="btn"
+              onClick={() => runSearch(q, genreId, page + 1)}
+              disabled={loading || page >= totalPages}
+            >
+              ถัดไป →
+            </button>
+          </div>
+        </div>
+      )}
       <div className="grid-movies" style={{ marginTop: "1.25rem" }}>
-        {results.map((m) => (
-          <MovieCard key={m.id} movie={m} entry={entries[m.id]} onSave={(p) => save(m, p)} />
+        {filteredResults.map((m) => (
+          <MovieCard key={m.id} movie={m} showWatchlistActions={false} />
         ))}
       </div>
     </main>

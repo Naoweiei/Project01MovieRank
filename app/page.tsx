@@ -15,7 +15,8 @@ const toItems = (list: TmdbMovie[]): RowItem[] =>
   list.map((m) => ({
     id: m.id, title: m.title, poster: m.poster, sub: m.year, genres: m.genres,
     badge: m.rating > 0 ? `★ ${m.rating.toFixed(1)}` : undefined,
-    href: `/search?q=${encodeURIComponent(m.title)}`,
+    href: `/movie/${m.id}`,
+    cta: "ดูรายละเอียด",
   }));
 
 const steps = [

@@ -17,6 +17,7 @@ export default function Navbar() {
     { href: "/search", label: "ค้นหา" },
     { href: "/watchlist", label: "Watchlist ของฉัน" },
     { href: "/ranking", label: "อันดับ" },
+    { href: "/contact", label: "ติดต่อ" },
   ];
 
   async function logout() {

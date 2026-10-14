@@ -239,6 +239,32 @@ a {
   outline: none;
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
+.search-form {
+  display: grid;
+  grid-template-columns: minmax(12rem, 1fr) minmax(11rem, 14rem) auto;
+  align-items: end;
+  gap: 0.7rem;
+}
+.search-genre-field {
+  display: grid;
+  gap: 0.25rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+.search-genre-field .input {
+  cursor: pointer;
+}
+.search-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.search-pagination-actions {
+  display: flex;
+  gap: 0.6rem;
+}
 .panel {
   background: var(--surface);
   border: 1px solid var(--line);
@@ -284,6 +310,12 @@ a {
 .movie:hover {
   border-color: var(--accent);
 }
+.movie-poster-link {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: var(--surface-2);
+}
 .movie-body {
   padding: 0.8rem 0.85rem 0.95rem;
   display: flex;
@@ -291,9 +323,84 @@ a {
   gap: 0.55rem;
   flex: 1;
 }
+.movie-watchlist-card .movie-body {
+  gap: 0.8rem;
+}
+.watchlist-actions {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 0.15rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--line);
+}
+.watchlist-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.watchlist-status-row .chip {
+  padding: 0.2rem 0.7rem;
+}
+.watchlist-rating-label,
+.watchlist-action-caption {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+.watchlist-rating {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 0.7rem;
+  background: rgba(13, 13, 16, 0.45);
+}
+.movie-watchlist-card .watchlist-rating .stars {
+  gap: 0.16rem;
+}
+.movie-watchlist-card .watchlist-rating .stars button {
+  font-size: 1.35rem;
+}
+.watchlist-status-button,
+.watchlist-remove-button {
+  width: 100%;
+  min-height: 2.5rem;
+  border-radius: 0.7rem;
+  font-size: 0.84rem;
+}
+.watchlist-status-button {
+  border-color: rgba(199, 91, 104, 0.4);
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+.watchlist-status-button:hover {
+  border-color: var(--accent);
+  background: rgba(199, 91, 104, 0.24);
+}
+.watchlist-remove-button {
+  display: flex;
+  justify-content: center;
+  gap: 0.45rem;
+  border: 1px solid transparent;
+  color: var(--muted);
+}
+.watchlist-remove-button svg {
+  width: 1rem;
+  height: 1rem;
+}
+.watchlist-remove-button:hover {
+  border-color: rgba(217, 120, 120, 0.32);
+  background: rgba(217, 120, 120, 0.1);
+  color: var(--danger);
+}
 .movie-title {
   font-weight: 700;
   line-height: 1.35;
+}
+.movie-detail-link:hover {
+  color: var(--gold);
 }
 .poster {
   aspect-ratio: 2 / 3;
@@ -628,7 +735,9 @@ a {
   );
 }
 .row-card:hover .row-overlay,
-.row-card:focus-visible .row-overlay {
+.row-card:focus-visible .row-overlay,
+.movie:hover .row-overlay,
+.movie-poster-link:focus-visible .row-overlay {
   opacity: 1;
 }
 .row-genres {
@@ -723,7 +832,8 @@ a {
 }
 .footer {
   border-top: 1px solid var(--line);
-  background: rgba(10, 15, 44, 0.6);
+  background: rgba(13, 13, 16, 0.88);
+  backdrop-filter: blur(12px);
 }
 .footer-in {
   max-width: 66rem;
@@ -744,6 +854,220 @@ a {
 }
 .footer-links a:hover {
   color: var(--ink);
+}
+
+/* ===== หน้าติดต่อ ===== */
+.contact-page {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(32rem 22rem at 82% 18%, rgba(199, 91, 104, 0.12), transparent 70%),
+    radial-gradient(24rem 18rem at 12% 75%, rgba(214, 184, 106, 0.05), transparent 72%);
+}
+.contact-wrap {
+  width: min(100% - 2.5rem, 54rem);
+  margin: 0 auto;
+  padding: clamp(4rem, 12vh, 7rem) 0;
+}
+.contact-intro {
+  max-width: 40rem;
+  margin-bottom: 2.5rem;
+}
+.contact-eyebrow,
+.contact-label {
+  color: var(--gold);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+.contact-intro h1 {
+  margin-top: 0.8rem;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+}
+.contact-intro p {
+  max-width: 34rem;
+  margin: 1rem 0 0;
+  font-size: 1.05rem;
+}
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: clamp(1.4rem, 4vw, 2.4rem);
+  border: 1px solid rgba(199, 91, 104, 0.32);
+  border-radius: 1.25rem;
+  background: linear-gradient(120deg, rgba(199, 91, 104, 0.12), var(--surface) 58%);
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.2);
+}
+.contact-icon {
+  display: grid;
+  flex: 0 0 4rem;
+  width: 4rem;
+  height: 4rem;
+  place-items: center;
+  border: 1px solid rgba(214, 184, 106, 0.3);
+  border-radius: 1rem;
+  background: rgba(214, 184, 106, 0.1);
+  color: var(--gold);
+  font-size: 2rem;
+  font-weight: 700;
+}
+.contact-details {
+  flex: 1;
+  min-width: 0;
+}
+.contact-details h2 {
+  margin-top: 0.45rem;
+  font-size: 1.35rem;
+}
+.contact-details p {
+  margin: 0.3rem 0 0.65rem;
+}
+.contact-email {
+  color: var(--ink);
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.contact-email:hover {
+  color: var(--gold);
+}
+.contact-note {
+  margin: 1rem 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* ===== รายละเอียดหนัง ===== */
+.movie-detail-page {
+  flex: 1;
+  background: var(--bg);
+}
+.movie-detail-hero {
+  min-height: 100%;
+  background-color: var(--surface);
+  background-position: center;
+  background-size: cover;
+}
+.movie-detail-wrap {
+  width: min(100% - 2.5rem, 66rem);
+  margin: 0 auto;
+  padding: 2rem 0 4.5rem;
+}
+.movie-detail-back {
+  display: inline-block;
+  margin-bottom: 1.75rem;
+  color: var(--muted);
+}
+.movie-detail-back:hover {
+  color: var(--ink);
+}
+.movie-detail-content {
+  display: grid;
+  grid-template-columns: minmax(12rem, 18rem) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 4.5rem);
+}
+.movie-detail-poster {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--surface-2);
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.45);
+}
+.movie-detail-poster img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+}
+.movie-detail-info h1 {
+  margin-top: 0.55rem;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+}
+.movie-detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  color: var(--muted);
+}
+.movie-detail-rating {
+  color: var(--gold);
+  font-weight: 700;
+}
+.movie-original-title {
+  margin: 0.35rem 0 0;
+}
+.movie-tagline {
+  margin: 1rem 0;
+  color: var(--muted);
+  font-style: italic;
+}
+.movie-overview {
+  margin-top: 1.5rem;
+}
+.movie-overview h2 {
+  font-size: 1.1rem;
+}
+.movie-overview p {
+  margin: 0.55rem 0 0;
+  line-height: 1.85;
+  white-space: pre-line;
+}
+.movie-release {
+  margin: 1rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.movie-watchlist {
+  display: grid;
+  gap: 1.1rem;
+  margin-top: 1.75rem;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: rgba(13, 13, 16, 0.74);
+  backdrop-filter: blur(12px);
+}
+.movie-watchlist-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.movie-watchlist-head h2 {
+  margin-top: 0.2rem;
+  font-size: 1.05rem;
+}
+.movie-watchlist-eyebrow {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+.movie-watchlist-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+}
+.movie-watchlist-rating {
+  display: grid;
+  gap: 0.2rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.movie-watchlist-rating .stars button {
+  font-size: 1.55rem;
+}
+.movie-watchlist-hint {
+  margin: 0;
+  font-size: 0.85rem;
+}
+.movie-detail-loading {
+  margin-top: 2rem;
 }
 
 /* ===== โครงโหลด (skeleton) ===== */
@@ -770,6 +1094,19 @@ a {
 }
 
 @media (max-width: 720px) {
+  .search-form {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .search-form > .input {
+    grid-column: 1 / -1;
+  }
+  .search-genre-field {
+    grid-column: 1;
+  }
+  .search-pagination {
+    align-items: flex-start;
+    flex-direction: column;
+  }
   .nav-search {
     order: 5;
     width: 100%;
@@ -800,6 +1137,32 @@ a {
   }
   .rank-no {
     font-size: 1.7rem;
+  }
+  .contact-card {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .contact-details {
+    flex-basis: calc(100% - 5.5rem);
+  }
+  .movie-detail-content {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.75rem;
+  }
+  .movie-detail-poster {
+    width: min(100%, 18rem);
+    margin: 0 auto;
+  }
+  .movie-detail-info {
+    width: 100%;
+  }
+  .movie-watchlist {
+    padding: 1rem;
+  }
+  .movie-watchlist-controls {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1rem;
   }
 }
 @media (prefers-reduced-motion: reduce) {
