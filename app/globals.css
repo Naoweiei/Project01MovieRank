@@ -930,11 +930,6 @@ a {
   font-weight: 700;
   overflow-wrap: anywhere;
 }
-.contact-note {
-  margin: 1rem 0 0;
-  text-align: center;
-  font-size: 0.9rem;
-}
 
 /* ===== รายละเอียดหนัง ===== */
 .movie-detail-page {
