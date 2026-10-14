@@ -55,8 +55,7 @@ export default function FeaturedHero({ items, loading }: { items: TmdbMovie[]; l
           {m.genres.length > 0 && <div className="genres">{m.genres.map((g) => <span key={g} className="chip">{g}</span>)}</div>}
           {m.overview && <p className="clamp3">{m.overview}</p>}
           <div className="feature-actions">
-            <Link href={`/search?q=${encodeURIComponent(m.title)}`} className="btn btn-primary">+ เพิ่มเข้า Watchlist</Link>
-            <Link href={`/movie/${m.id}`} className="btn">รายละเอียดหนัง</Link>
+            <Link href={`/movie/${m.id}`} className="btn btn-primary">รายละเอียดหนัง</Link>
             <Link href="/ranking" className="btn">ดูอันดับทั้งหมด</Link>
           </div>
         </div>
