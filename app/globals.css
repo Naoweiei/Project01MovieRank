@@ -930,9 +930,6 @@ a {
   font-weight: 700;
   overflow-wrap: anywhere;
 }
-.contact-email:hover {
-  color: var(--gold);
-}
 .contact-note {
   margin: 1rem 0 0;
   text-align: center;

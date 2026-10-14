@@ -22,15 +22,11 @@ export default function ContactPage() {
           <div className="contact-details">
             <span className="contact-label">ส่งอีเมลหาเรา</span>
             <h2 id="contact-email-title">คุยกับทีม MovieRank</h2>
-            <a className="contact-email" href="mailto:MoiveRank@gmail.com">
+            <p className="contact-email">
               MoiveRank@gmail.com
-            </a>
+            </p>
           </div>
         </section>
-
-        <p className="contact-note muted">
-          
-        </p>
       </div>
     </main>
   );
