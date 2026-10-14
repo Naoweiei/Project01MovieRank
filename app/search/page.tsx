@@ -77,7 +77,7 @@ export default function SearchPage() {
         </label>
         <button className="btn btn-primary" disabled={loading}>{loading ? "กำลังค้นหา..." : "ค้นหา"}</button>
       </form>
-      {!user && <p className="notice">ค้นหาได้เลย แต่ต้อง <Link href="/login"><u>เข้าสู่ระบบ</u></Link> ก่อนจึงจะบันทึกลง Watchlist ได้</p>}
+      {!user && <p className="notice">ค้นหาเลย แต่ต้อง <Link href="/login"><u>เข้าสู่ระบบ</u></Link> ก่อนจึงจะบันทึกลง Watchlist ได้</p>}
       {msg && <p className="notice" role="status">{msg}</p>}
       {searched && filteredResults.length === 0 && !msg && (
         <p className="muted">
