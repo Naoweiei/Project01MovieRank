@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer-in">
         <div>
-          <div className="brand"><span className="logo-mark">M</span>MovieReelRank</div>
+          <div className="brand"><span className="logo-mark">M</span>MovieRank</div>
           <p className="muted" style={{ margin: ".6rem 0 0", maxWidth: "22rem" }}>
             ค้นหาหนัง เก็บไว้ใน Watchlist ให้ดาว และดูอันดับจากเสียงของทุกคน
           </p>
